@@ -16,7 +16,7 @@ exports.up = async function(knex) {
 
   await knex.schema.createTable('resources', (table) => {
     table.increments('id')
-    table.string('resource_name').notNullable()
+    table.string('resource_name').notNullable().unique()
     table.string('resource_description')
   })
 
