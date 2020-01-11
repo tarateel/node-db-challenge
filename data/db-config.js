@@ -1,7 +1,5 @@
-const server = require('./server.js');
+const knex = require('knex');
+const config = require('../knexfile.js');
+const db = knex(config.development);
 
-const PORT = process.env.PORT || 5000;
-
-server.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}...`);
-});
+module.exports = db;
