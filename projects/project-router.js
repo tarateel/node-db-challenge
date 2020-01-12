@@ -7,7 +7,20 @@ const router = express.Router();
 router.get('/', (req, res) => {
   Projects.findProjects()
   .then(projects => {
-    res.json(projects);
+    const queryCompleted = projects.map(project => {
+      if (project.completed == 0) {
+        return {
+          ...project,
+          completed: false
+        }
+      } else if (project.completed == 1) {
+        return {
+          ...project,
+          completed: true
+        }
+      }
+    })
+    res.json(queryCompleted);
   })
   .catch(err => {
     res.status(500).json({ message: 'Failed to get projects' });
@@ -47,16 +60,6 @@ router.get('/:id/tasks', (req, res) => {
   });
 });
 
-router.get('/resources', (req, res) => {
-  resources
-  .then(resources => {
-    res.json(resources);
-  })
-  .catch(err => {
-    res.status(500).json({ message: 'Failed to get resources' });
-  });
-});
-
 router.post('/', (req, res) => {
   const projectData = req.body;
 
@@ -66,6 +69,27 @@ router.post('/', (req, res) => {
   })
   .catch (err => {
     res.status(500).json({ message: 'Failed to create new project' });
+  });
+});
+
+router.post('/:id/tasks', (req, res) => {
+  const taskData = req.body;
+  const { id } = req.params; 
+
+  Projects.findProjectById(id)
+  .then(project => {
+    if (project) {
+      Projects.addTask(taskData, id)
+      .then(task => {
+        res.status(201).json(task);
+      })
+    } else {
+      res.status(404).json({ message: 'Could not find project with given id.' })
+    }
+  })
+  .catch (err => {
+    console.log(err);
+    res.status(500).json({ message: 'Failed to create new task' });
   });
 });
 

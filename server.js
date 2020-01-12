@@ -1,5 +1,6 @@
 const express = require('express');
 const projectRouter = require('./projects/project-router.js');
+const resourceRouter = require('./resources/resource-router');
 
 const server = express();
 
@@ -8,7 +9,7 @@ const morgan = require('morgan');
 server.use(express.json());
 server.use(morgan('dev'));
 server.use('/api/projects', projectRouter);
-server.use('/api/resources', projectRouter);
+server.use('/api/resources', resourceRouter);
 
 server.use((err, req, res, next) => {
   console.log('Error:', err)
