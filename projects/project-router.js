@@ -72,20 +72,27 @@ router.post('/', (req, res) => {
   });
 });
 
+// router.post('/:id/tasks', (req, res) => {
+//   const taskData = req.body;
+//   const { id } = req.params; 
+
+//   Projects.addTask(taskData)
+//     .then(task => {
+//       res.status(201).json(task);
+//     })
+//     .catch (err => {
+//       console.log(err);
+//       res.status(500).json({ message: 'Failed to create new task' });
+//     });
+// });
+
 router.post('/:id/tasks', (req, res) => {
   const taskData = req.body;
-  const { id } = req.params; 
+  const { id } = req.params;
 
-  Projects.findProjectById(id)
-  .then(project => {
-    if (project) {
-      Projects.addTask(taskData, id)
-      .then(task => {
-        res.status(201).json(task);
-      })
-    } else {
-      res.status(404).json({ message: 'Could not find project with given id.' })
-    }
+  Projects.addTask(taskData)
+  .then(newTask => {
+    res.status(201).json(newTask);
   })
   .catch (err => {
     console.log(err);

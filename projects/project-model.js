@@ -27,9 +27,9 @@ function findTasks(id) {
 		.orderBy('t.id', 'asc')
 };
 
-function addTask(taskData, id) {
+function addTask(newTask) {
   return db('tasks')
-    .insert(task)
+    .insert(newTask)
 		.then(ids => {
       return findTasks(ids[0])
     })
@@ -40,6 +40,5 @@ module.exports = {
   findProjectById,
   addProject,
   findTasks,
-  // addTasks,
-  // findResources,
+  addTask
 };
