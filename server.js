@@ -8,6 +8,7 @@ const morgan = require('morgan');
 server.use(express.json());
 server.use(morgan('dev'));
 server.use('/api/projects', projectRouter);
+server.use('/api/resources', projectRouter);
 
 server.use((err, req, res, next) => {
   console.log('Error:', err)

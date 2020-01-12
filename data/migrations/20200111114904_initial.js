@@ -1,19 +1,19 @@
 exports.up = async function(knex) {
   await knex.schema.createTable('projects', (table) => {
-    table.increments()
+    table.increments('id')
     table.string('project_name').notNullable().unique()
     table.string('project_description')
     table.boolean('completed').notNullable().defaultTo(false)
   })
 
   await knex.schema.createTable('resources', (table) => {
-    table.increments()
+    table.increments('id')
     table.string('resource_name').notNullable().unique()
     table.string('resource_description')
   })
 
   await knex.schema.createTable('tasks', (table) => {
-    table.increments()
+    table.increments('id')
     table.string('task_description').notNullable()
     table.string('task_notes')
     table.boolean('completed').notNullable().defaultTo(false)

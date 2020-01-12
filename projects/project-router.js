@@ -47,10 +47,20 @@ router.get('/:id/tasks', (req, res) => {
   });
 });
 
+router.get('/resources', (req, res) => {
+  resources
+  .then(resources => {
+    res.json(resources);
+  })
+  .catch(err => {
+    res.status(500).json({ message: 'Failed to get resources' });
+  });
+});
+
 router.post('/', (req, res) => {
   const projectData = req.body;
 
-  Projects.add(projectData)
+  Projects.addProject(projectData)
   .then(project => {
     res.status(201).json(project);
   })
